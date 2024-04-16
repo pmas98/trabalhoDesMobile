@@ -13,6 +13,11 @@
         android:theme="@style/Theme.MobileProject"
         tools:targetApi="31">
         <activity
+            android:name=".activities.CadastroExpo"
+            android:exported="false"/>
+        <!--            android:label="@string/title_activity_cadastro_expo"-->
+<!--            android:theme="@style/Theme.MobileProject" />-->
+        <activity
             android:name=".activities.Tela1Activity"
             android:exported="false" />
         <activity
