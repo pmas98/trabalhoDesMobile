@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MobileProject</string>
-    <string name="header_tela">Login</string>
+    <string name="header_tela">Administrador</string>
     <string name="e_mail">"  E-mail"</string>
     <string name="senha">"  Senha"</string>
-    <string name="login">Entrar</string>
+    <string name="login">Login</string>
 </resources>

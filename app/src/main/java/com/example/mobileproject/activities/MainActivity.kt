@@ -9,8 +9,8 @@ import java.io.IOException
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
+        setContentView(R.layout.activity_tela1)
+
         val client = OkHttpClient()
 
         val url = "https://backendapp-production-da1c.up.railway.app/expo"
