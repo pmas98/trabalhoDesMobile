@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.mobileproject.activities.CadastroExpo
+import com.example.mobileproject.activities.SelecaoObras2
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val butaoTeste: Button = findViewById(R.id.button_test)
         butaoTeste.setOnClickListener {
-            val intent = Intent(this, CadastroExpo::class.java)
+            val intent = Intent(this, SelecaoObras2::class.java)
             startActivity(intent)
         }
     }
