@@ -5,6 +5,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mobileproject.R
+import android.graphics.Paint
+
+
 
 class SelecaoObrasAdapter(private val items: List<String>) : RecyclerView.Adapter<SelecaoObrasAdapter.ViewHolder>() {
 
@@ -19,7 +22,32 @@ class SelecaoObrasAdapter(private val items: List<String>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.btn.text = items[position]
+        holder.btn.autoResizeText()
     }
 
     override fun getItemCount() = items.size
+
+    fun Button.autoResizeText() {
+        this.post {
+            val buttonText = this.text.toString()
+            val buttonWidth = this.width
+
+            var textSize = 1f
+            this.textSize = textSize
+
+            val paint = this.paint
+            var textWidth = paint.measureText(buttonText)
+
+            while ((textWidth < buttonWidth/3)) {
+                textSize += 1f
+                paint.textSize = textSize
+                textWidth = paint.measureText(buttonText)
+                if (textSize > 28f) {
+                    break
+                }
+            }
+
+            this.textSize = textSize
+        }
+    }
 }
