@@ -1,5 +1,6 @@
 package com.example.mobileproject.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 
-class Tela1Activity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela1)
@@ -55,6 +56,17 @@ class Tela1Activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 // Handle response
                 val responseBody = response.body?.string()
+
+                if (response.code == 400) {
+                    findViewById<EditText>(R.id.input_password).error = "E-mail ou senha inválidos"
+                    findViewById<EditText>(R.id.input_password).text.clear()
+                    findViewById<EditText>(R.id.input_email).text.clear()
+                } else if (response.code == 200) {
+                    // call next activity
+                    // startActivity(Intent(, AdminMenuActivity::class.java))
+                }
+
+
                 if (responseBody != null) {
                     Log.d("OkHTTP", responseBody)
                 }
