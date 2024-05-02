@@ -18,23 +18,6 @@ import com.example.mobileproject.activities.SelecaoObras2
 
 class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<String>, val idsObras: List<String>, val context: Context) : RecyclerView.Adapter<SelecaoObrasAdapter.ViewHolder>() {
 
-    private var onClickListener: OnClickListener? = null
-    private var onClickButon: Click? = null
-    fun setOnClickListener(onClickListener: OnClickListener) {
-        this.onClickListener = onClickListener
-    }
-
-    fun setOnClickButonListener(onClickButon: Click){
-        this.onClickButon = onClickButon
-    }
-
-    interface OnClickListener {
-        fun onClick(position: Int)
-    }
-
-    interface Click{
-        fun onBtnClick(position: Int)
-    }
 
     inner class ViewHolder(view: View, nomes: List<String> = nomeObras.toList(), ids: List<String> = idsObras.toList(), screenContext: Context = context) : RecyclerView.ViewHolder(view) {
         val btn: Button = view.findViewById(R.id.ButtonSelecaoObras)
@@ -61,11 +44,6 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.btn.text = items[position]
         holder.btn.autoResizeText()
-        holder.itemView.setOnClickListener {
-            if (onClickListener != null) {
-                onClickListener!!.onClick(position)
-            }
-        }
     }
 
     override fun getItemCount() = items.size
