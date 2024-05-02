@@ -209,17 +209,5 @@ class SelecaoObras2 : AppCompatActivity() {
             }
         }
 
-        recyclerAdapter.setOnClickButonListener(object:
-            SelecaoObrasAdapter.Click {
-            override fun onBtnClick(position: Int) {
-               val intent = Intent(this@SelecaoObras2, CadastroExpo::class.java)
-                Log.d("OkHTTP", "click")
-                // Passing the data to the
-                // EmployeeDetails Activity
-//                intent.putExtra(NEXT_SCREEN, model)
-                startActivity(intent)
-            }
-            })
-
     }
 }
