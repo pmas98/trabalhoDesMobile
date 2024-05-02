@@ -15,30 +15,72 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/SelecaoObraHeader"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#0466C8"
-            android:gravity="center"
-            android:text="Seleção de Obras"
-            android:textAlignment="center"
-            android:textColor="#FEFEFE"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RecyclerViewSelecaoObras"
+            <TextView
+                android:id="@+id/SelecaoObraHeader"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="80dp"
+                android:background="#0466C8"
+                android:gravity="center"
+                android:text="Seleção de Obras"
+                android:textAlignment="center"
+                android:textColor="#FEFEFE"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/selecioneExpo"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="#0466C8"
+                android:gravity="center"
+                android:text="Exposição:"
+                android:textAlignment="center"
+                android:textColor="#FEFEFE"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SelecaoObraHeader" />
+
+            <Spinner
+                android:id="@+id/spinnerSelecaoExpo"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cor_click_botao"
+                android:dropDownWidth="match_parent"
+                android:gravity="center"
+                android:popupBackground="@drawable/cor_click_list_picker"
+                android:scrollbars="vertical"
+                android:spinnerMode="dropdown"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selecioneExpo" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="-49dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RecyclerViewSelecaoObras"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="300dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
