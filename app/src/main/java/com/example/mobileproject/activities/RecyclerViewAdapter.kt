@@ -21,16 +21,16 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
 
     inner class ViewHolder(view: View, nomes: List<String> = nomeObras.toList(), ids: List<String> = idsObras.toList(), screenContext: Context = context) : RecyclerView.ViewHolder(view) {
         val btn: Button = view.findViewById(R.id.ButtonSelecaoObras)
-
+        val btn_edit: Button = view.findViewById(R.id.buttonEditObra)
         init {
-            btn.setOnClickListener {
+            btn_edit.setOnClickListener {
                 Log.d("OkHTTP", btn.text.toString())
                 var index = nomes.indexOf(btn.text.toString())
                 Log.d("OkHTTP", index.toString())
                 Log.d("OkHTTP", ids.toString())
                 val id = ids[index]
                 Log.d("OkHTTP", id)
-                var intent = Intent(screenContext, CadastroExpo::class.java)
+                var intent = Intent(screenContext, EdicaoObra::class.java)
                 startActivity(screenContext, intent, null)
             }
         }

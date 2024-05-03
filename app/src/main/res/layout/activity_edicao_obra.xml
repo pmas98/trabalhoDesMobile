@@ -1,0 +1,258 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context=".activities.EdicaoObra">
+
+<LinearLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiente_padrao"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/SelecaoObraHeader"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#0466C8"
+        android:gravity="center"
+        android:text="Editar Obra"
+        android:textAlignment="center"
+        android:textColor="#FEFEFE"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/bg_caixas"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/label_nome_obra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Nome da Obra"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="34sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/input_obra_name"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="Insira o nome aqui"
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/terciaria"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_nome_obra" />
+
+                    <TextView
+                        android:id="@+id/label_autor_obra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Nome do Autor"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="34sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/input_obra_name" />
+
+                    <EditText
+                        android:id="@+id/input_obra_autor"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="Insira o nome do autor aqui"
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/terciaria"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_autor_obra" />
+
+                    <TextView
+                        android:id="@+id/label_descricao_obra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Descrição da Obra"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/input_obra_autor" />
+
+                    <EditText
+                        android:id="@+id/input_obra_description"
+                        android:layout_width="280dp"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="Insira a descrição da obra aqui"
+                        android:inputType="textMultiLine"
+                        android:overScrollMode="always"
+                        android:scrollbarAlwaysDrawVerticalTrack="true"
+                        android:scrollbarSize="8dp"
+                        android:scrollbarStyle="insideOverlay"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/terciaria"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_descricao_obra" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_adicionar_audio"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/cor_click_botao"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="left|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="5dp"
+                android:text="Adicionar Audiodescrição"
+                android:textAlignment="gravity"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <Button
+                android:id="@+id/button_play_audio"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cor_click_botao"
+                android:fontFamily="sans-serif-medium"
+                android:foreground="@mipmap/botao_play"
+                android:foregroundGravity="fill_horizontal|center_vertical|clip_horizontal|clip_vertical|center_horizontal|fill"
+                android:gravity="bottom|center"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                app:cornerRadius="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <Button
+                android:id="@+id/button_atualizar"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cor_click_botao"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="Atualizar"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:typeface="normal"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_adicionar_audio" />
+
+            <Button
+                android:id="@+id/button_apagar"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/cor_click_botao_vermelho"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="Apagar"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:typeface="normal"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_atualizar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

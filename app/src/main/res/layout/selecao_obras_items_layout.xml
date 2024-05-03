@@ -9,9 +9,7 @@
         android:id="@+id/ButtonSelecaoObras"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/cor_click_botao"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
@@ -22,6 +20,18 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonEditObra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cor_click_botao"
+        android:foreground="@mipmap/botao_edit"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toEndOf="@+id/ButtonSelecaoObras"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
