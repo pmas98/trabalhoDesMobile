@@ -31,6 +31,7 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
                 val id = ids[index]
                 Log.d("OkHTTP", id)
                 var intent = Intent(screenContext, EdicaoObra::class.java)
+                intent.putExtra("id", id)
                 startActivity(screenContext, intent, null)
             }
         }
