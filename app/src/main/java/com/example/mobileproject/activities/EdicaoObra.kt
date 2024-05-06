@@ -1,14 +1,19 @@
 package com.example.mobileproject.activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.text.toSpannable
 import com.example.mobileproject.R
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -137,7 +142,7 @@ class EdicaoObra : AppCompatActivity() {
         Log.d("MYmobileproject", "${obraData}")
         nomeObraEditText.text = obraData["name"].toString()
         autorObraEditText.text = obraData["autor"].toString()
-        descricaoObraEditText.text = obraData["description"].toString()
+        descricaoObraEditText.text = obraData["description"]
 
         nomeObraEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -154,6 +159,11 @@ class EdicaoObra : AppCompatActivity() {
             }
         })
 
+        nomeObraEditText.setOnFocusChangeListener { v, hasFocus ->
+            // Show cursor// Remove cursor
+            nomeObraEditText.isCursorVisible = hasFocus
+        }
+
         autorObraEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -169,6 +179,11 @@ class EdicaoObra : AppCompatActivity() {
             }
         })
 
+        autorObraEditText.setOnFocusChangeListener { v, hasFocus ->
+            // Show cursor// Remove cursor
+            autorObraEditText.isCursorVisible = hasFocus
+        }
+
         descricaoObraEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -183,6 +198,37 @@ class EdicaoObra : AppCompatActivity() {
                 Log.d("MYmobileproject", "${obraData}")
             }
         })
+
+        descricaoObraEditText.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                v.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            false
+        }
+
+        descricaoObraEditText.setOnFocusChangeListener { v, hasFocus ->
+            // Show cursor// Remove cursor
+            descricaoObraEditText.isCursorVisible = hasFocus
+        }
+
+        val mainScrollView: ScrollView = findViewById(R.id.mainScrollView)
+
+        mainScrollView.setOnTouchListener{ v, event ->
+
+            var isUserEditingText: Boolean = nomeObraEditText.isFocused or
+                    autorObraEditText.isFocused or
+                    descricaoObraEditText.isFocused
+
+            if ( isUserEditingText ) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                nomeObraEditText.clearFocus()
+                autorObraEditText.clearFocus()
+                descricaoObraEditText.clearFocus()
+            }
+            false
+        }
 
         atualizarObraBtn.setOnClickListener{
             val activityContex = this@EdicaoObra
