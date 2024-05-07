@@ -85,21 +85,6 @@ suspend fun getAllExpoObras(id: String): String {
 
     return respostaFinal
 }
-suspend fun getAllObras(id: String): String {
-    val client = OkHttpClient()
-
-    val request = Request.Builder()
-        .url("https://backendapp-production-da1c.up.railway.app/obra")
-        .build()
-
-    val response = withContext(Dispatchers.IO) {
-        client.newCall(request).execute()
-    }
-
-    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-    return response.body?.string() ?: "No response"
-}
 
 suspend fun deleteExpo(expoId: String): String {
 
@@ -269,6 +254,21 @@ class SelecaoObras2 : AppCompatActivity() {
 
             val intent = intent
             finish()
+            startActivity(intent)
+
+        }
+
+        var buttonAdionar: Button = findViewById(R.id.button_adicionar)
+
+        buttonAdionar.setOnClickListener {
+
+            Log.d("MYmobileproject", "Click Adicionar")
+            val selectedItem: String = spinner.selectedItem.toString()
+            val index = nomesExpos.indexOf(selectedItem)
+            val newId = idsExpos[index]
+
+            val intent = Intent(this, AdicionarObra::class.java)
+            intent.putExtra("expoId", newId)
             startActivity(intent)
 
         }

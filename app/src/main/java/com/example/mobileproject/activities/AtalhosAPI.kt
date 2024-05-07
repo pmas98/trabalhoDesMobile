@@ -1,5 +1,7 @@
 package com.example.mobileproject.activities
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl
@@ -9,7 +11,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okio.IOException
-class AtalhosAPI {
+class AtalhosAPI() {
     fun verExpos() {
         val url = "https://backendapp-production-da1c.up.railway.app/expo"
         Log.d("OkHTTP", url)
@@ -114,4 +116,43 @@ class AtalhosAPI {
             }
         })
     }
+
+    suspend fun addObra(obraData: MutableMap<String,String>): String {
+
+        val url = "https://backendapp-production-da1c.up.railway.app/obra"
+        Log.d("OkHTTP", url)
+        val client = OkHttpClient()
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestString = """
+                {
+                     "expoId": "${obraData["expoId"]}",
+                     "name": "${obraData["name"]}",
+                     "autor": "${obraData["autor"]}",
+                     "description": "${obraData["description"]}",
+                     "imageURL": "${obraData["imageURL"]}"
+                }
+            """
+
+        Log.d("MYmobileproject", requestString)
+
+        val requestBody = requestString.trimIndent().toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .post(requestBody)
+            .url(url)
+            .build()
+
+        val response = withContext(Dispatchers.IO) {
+            client.newCall(request).execute()
+        }
+
+        if (!response.isSuccessful){
+            Log.d("MYmobileproject", "Not successul ${response}")
+//        throw IOException("Unexpected code $response")
+        }
+
+        return response.body?.string() ?: "No response"
+
+    }
+
 }

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MobileProject"
         tools:targetApi="31">
         <activity
+            android:name=".activities.AdicionarObra"
+            android:exported="false" />
+        <activity
             android:name=".activities.EdicaoObra"
             android:exported="false" />
         <activity
