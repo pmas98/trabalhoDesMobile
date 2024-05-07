@@ -61,10 +61,14 @@ class LoginActivity : AppCompatActivity() {
 
                 if (responseBody != null) {
                     if (response.code == 400) {
-                        findViewById<EditText>(R.id.input_password).error = "E-mail ou senha inválidos"
-                        findViewById<EditText>(R.id.input_password).text.clear()
-                        findViewById<EditText>(R.id.input_email).text.clear()
                         Log.d("OkHTTP", "e-mail ou usuario invalidos")
+
+                        runOnUiThread{
+                            findViewById<EditText>(R.id.input_password).error = "E-mail ou senha inválidos"
+                            findViewById<EditText>(R.id.input_password).setText("")
+                            findViewById<EditText>(R.id.input_email).text.clear()
+                        }
+
                     } else if (response.code == 200) {
                         // call next activity
                         startActivity(intent)

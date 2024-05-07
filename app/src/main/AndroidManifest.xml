@@ -16,12 +16,12 @@
         tools:targetApi="31">
         <activity
             android:name=".activities.UserMenuActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_user_menu"
             android:theme="@style/Theme.MobileProject" />
         <activity
             android:name=".activities.AdminMenuActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_admin_menu"
             android:theme="@style/Theme.MobileProject" />
         <activity
