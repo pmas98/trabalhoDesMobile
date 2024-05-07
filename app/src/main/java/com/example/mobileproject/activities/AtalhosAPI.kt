@@ -155,4 +155,41 @@ class AtalhosAPI() {
 
     }
 
+    suspend fun deleteObra(obraId: String): String{
+
+        var respostaFinal = "Sem Resposta"
+
+        val client = OkHttpClient()
+        val url = "https://backendapp-production-da1c.up.railway.app/obra"
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = """
+                {
+                    "id": "${obraId}"
+                }
+            """.trimIndent().toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .delete(requestBody)
+            .url(url)
+            .build()
+
+
+        val response = withContext(Dispatchers.IO) {
+            client.newCall(request).execute()
+        }
+
+        if (!response.isSuccessful){
+            return "Unexpected code ${response}"
+//        throw IOException("Unexpected code $response")
+        }
+
+        respostaFinal = response.body?.string() ?: "No response"
+
+        Log.d("MYmobileproject", "Delete Expo --->${respostaFinal}")
+
+        return respostaFinal
+
+    }
+
 }

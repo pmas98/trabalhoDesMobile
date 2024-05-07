@@ -1,5 +1,6 @@
 package com.example.mobileproject.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.text.toSpannable
 import com.example.mobileproject.R
 import okhttp3.*
@@ -123,13 +125,15 @@ class EdicaoObra : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edicao_obra)
 
+        var apiManager = AtalhosAPI()
+
         val obraID = intent.getStringExtra("id")
 
         var nomeObraEditText: TextView = findViewById(R.id.input_obra_name)
         var autorObraEditText: TextView = findViewById(R.id.input_obra_autor)
         var descricaoObraEditText: TextView = findViewById(R.id.input_obra_description)
 
-        var atualizarObraBtn: Button = findViewById(R.id.button_atualizar)
+
 
         var obraData: MutableMap<String, String> = mutableMapOf()
         runBlocking {
@@ -230,15 +234,45 @@ class EdicaoObra : AppCompatActivity() {
             false
         }
 
+        var atualizarObraBtn: Button = findViewById(R.id.button_atualizar)
+
         atualizarObraBtn.setOnClickListener{
             val activityContex = this@EdicaoObra
 
             runBlocking {
                 val resposta = patchObra(obraData)
                 Log.d("MYmobileproject", resposta)
-                val intent = Intent(activityContex, SelecaoObras2::class.java)
-                startActivity(intent)
+                finish()
             }
+        }
+
+        var apagarObraBtn: Button = findViewById(R.id.button_apagar)
+
+        apagarObraBtn.setOnClickListener {
+            val activityContex = this@EdicaoObra
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            builder.setView(inflater.inflate(R.layout.delete_pop_up, null))
+            val dialog = builder.create()
+
+            dialog.show()
+
+            val yesButton = dialog.findViewById<Button>(R.id.button__confirma_apagar)
+            yesButton?.setOnClickListener {
+
+                runBlocking {
+
+                    apiManager.deleteObra(obraID.toString())
+                    finish()
+
+                }
+            }
+
+            val noButton = dialog.findViewById<Button>(R.id.button_cancelar)
+            noButton?.setOnClickListener {
+                dialog.dismiss()
+            }
+
         }
 
     }

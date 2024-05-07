@@ -1,5 +1,6 @@
 package com.example.mobileproject.activities
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
@@ -12,6 +13,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.example.mobileproject.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -163,9 +167,20 @@ fun obterIdsJason(response: String): List<String> {
 
 
 class SelecaoObras2 : AppCompatActivity() {
+    var toRefresh2 = false
+    lateinit var resultLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selecao_obras2)
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val toRefresh: Boolean? = result.data?.getBooleanExtra("refresh", false)
+                if (toRefresh == true) {
+                    recreate()
+                }
+            }
+        }
 
         var jasonExpos: String
         var idsExpos: List<String>
@@ -222,7 +237,7 @@ class SelecaoObras2 : AppCompatActivity() {
                     jasonObras = getAllExpoObras(newId)
                     idsObras = obterIdsJason(jasonObras)
                     nomesObras = obterNomesJason(jasonObras)
-
+                    toRefresh2 = true
                 }
 
                 recycleViewItems = nomesObras
@@ -240,21 +255,36 @@ class SelecaoObras2 : AppCompatActivity() {
 
         btnApagarExpo.setOnClickListener{
 
-            val selectedItem: String = spinner.selectedItem.toString()
-            val index = nomesExpos.indexOf(selectedItem)
-            val newId = idsExpos[index]
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            builder.setView(inflater.inflate(R.layout.delete_pop_up, null))
+            val dialog = builder.create()
 
-            Log.d("MYmobileproject", "Remove: $newId")
+            dialog.show()
 
-            runBlocking {
+            val yesButton = dialog.findViewById<Button>(R.id.button__confirma_apagar)
+            yesButton?.setOnClickListener {
+                val selectedItem: String = spinner.selectedItem.toString()
+                val index = nomesExpos.indexOf(selectedItem)
+                val newId = idsExpos[index]
 
-                deleteExpo(newId)
+                Log.d("MYmobileproject", "Remove: $newId")
 
+                runBlocking {
+
+                    deleteExpo(newId)
+
+                }
+
+                val intent = intent
+                finish()
+                startActivity(intent)
             }
 
-            val intent = intent
-            finish()
-            startActivity(intent)
+            val noButton = dialog.findViewById<Button>(R.id.button_cancelar)
+            noButton?.setOnClickListener {
+                dialog.dismiss()
+            }
 
         }
 
@@ -269,9 +299,20 @@ class SelecaoObras2 : AppCompatActivity() {
 
             val intent = Intent(this, AdicionarObra::class.java)
             intent.putExtra("expoId", newId)
-            startActivity(intent)
+            resultLauncher.launch(intent)
+//            startActivity(intent)
 
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (toRefresh2){
+            val intent = intent
+            finish()
+            startActivity(intent)
+        }
     }
 }

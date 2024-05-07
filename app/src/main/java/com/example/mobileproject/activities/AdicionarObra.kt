@@ -131,8 +131,7 @@ class AdicionarObra : AppCompatActivity() {
 
                 val resposta = apiManager.addObra(obraData)
                 Log.d("MYmobileproject", resposta)
-                val intent = Intent(activityContex, SelecaoObras2::class.java)
-                startActivity(intent)
+                finish()
             }
 
         }
