@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activities.AdminMenuActivity">
+    tools:context=".activities.UserMenuActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -16,12 +16,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/AdminHeader"
+            android:id="@+id/appHeader"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#0466C8"
             android:gravity="center"
-            android:text="@string/header_tela"
+            android:text="@string/nome_app"
             android:textAlignment="center"
             android:textColor="#FEFEFE"
             android:textSize="34sp"
@@ -31,48 +31,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button_obras_cadastradas"
-                android:layout_width="278dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="106dp"
-                android:layout_marginEnd="105dp"
-                android:layout_marginBottom="408dp"
-                android:background="@drawable/cor_click_botao"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="@string/obras_cadastradas"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                android:typeface="normal"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.512"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button_cadastrar_expo"
-                android:layout_width="278dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="106dp"
-                android:layout_marginEnd="105dp"
-                android:layout_marginBottom="160dp"
+                android:id="@+id/button_scan"
+                android:layout_width="241dp"
+                android:layout_height="57dp"
                 android:background="@drawable/cor_click_botao"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="@string/cadastrar_expo"
+                android:text="@string/botao_scan"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="26sp"
                 android:typeface="normal"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.512"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.792" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/qr_code_symbol" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
