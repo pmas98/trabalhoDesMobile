@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
 import com.example.mobileproject.R
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -100,6 +101,45 @@ suspend fun getAllObras(id: String): String {
     return response.body?.string() ?: "No response"
 }
 
+suspend fun deleteExpo(expoId: String): String {
+
+    var respostaFinal = "Sem Resposta"
+
+    val client = OkHttpClient()
+    val url = "https://backendapp-production-da1c.up.railway.app/expo"
+
+    val mediaType = "application/json; charset=utf-8".toMediaType()
+    val requestBody = """
+                {
+                    "id": "${expoId}"
+                }
+            """.trimIndent().toRequestBody(mediaType)
+
+    val request = Request.Builder()
+        .delete(requestBody)
+        .url(url)
+        .build()
+
+
+    val response = withContext(Dispatchers.IO) {
+        client.newCall(request).execute()
+    }
+
+    if (!response.isSuccessful){
+        return "Unexpected code ${response}"
+//        throw IOException("Unexpected code $response")
+    }
+
+    respostaFinal = response.body?.string() ?: "No response"
+
+    Log.d("MYmobileproject", "Delete Expo --->${respostaFinal}")
+
+    return respostaFinal
+}
+
+
+
+
 fun obterNomesJason(response: String): List<String> {
     val jsonElement = Json.parseToJsonElement(response)
     val result = mutableListOf<String>()
@@ -135,6 +175,8 @@ fun obterIdsJason(response: String): List<String> {
 
     return result
 }
+
+
 class SelecaoObras2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,6 +249,28 @@ class SelecaoObras2 : AppCompatActivity() {
                 // Another interface callback
                 Log.d("OkHTTP", "nothing")
             }
+        }
+
+        var btnApagarExpo: ImageButton = findViewById(R.id.buttonRemoveExpo)
+
+        btnApagarExpo.setOnClickListener{
+
+            val selectedItem: String = spinner.selectedItem.toString()
+            val index = nomesExpos.indexOf(selectedItem)
+            val newId = idsExpos[index]
+
+            Log.d("MYmobileproject", "Remove: $newId")
+
+            runBlocking {
+
+                deleteExpo(newId)
+
+            }
+
+            val intent = intent
+            finish()
+            startActivity(intent)
+
         }
 
     }

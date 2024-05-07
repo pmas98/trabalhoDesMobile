@@ -94,7 +94,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/buttonRemoveExpo"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginStart="20dp"
