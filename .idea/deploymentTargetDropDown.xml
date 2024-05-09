@@ -20,6 +20,18 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="AdminMenuActivity">
+        <State />
+      </entry>
+      <entry key="LoginActivity">
+        <State />
+      </entry>
+      <entry key="MainActivity">
+        <State />
+      </entry>
+      <entry key="UserMenuActivity">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

@@ -4,4 +4,11 @@
     <string name="e_mail">"  E-mail"</string>
     <string name="senha">"  Senha"</string>
     <string name="login">Login</string>
+    <string name="obras_cadastradas">"Obras Cadastradas"</string>
+    <string name="cadastrar_expo">"Cadastrar Exposição"</string>
+    <string name="title_activity_user_menu">UserMenuActivity</string>
+    <string name="title_activity_admin_menu">AdminMenuActivity</string>
+    <string name="nome_app">Espaço Cultural</string>
+    <string name="escanear_qr_code">"Aponte a câmera para o QR Code de uma obra"</string>
+    <string name="botao_scan">Escanear QR Code</string>
 </resources>
