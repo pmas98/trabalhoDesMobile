@@ -1,5 +1,6 @@
 package com.example.mobileproject.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,20 +16,21 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 
-class Tela1Activity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tela1)
+        setContentView(R.layout.activity_login)
 
          findViewById<Button>(R.id.button_login)
              .setOnClickListener {
                  val email = findViewById<EditText>(R.id.input_email).text.toString()
                  val password = findViewById<EditText>(R.id.input_password).text.toString()
+                 val intent = Intent(this, AdminMenuActivity::class.java)
 
-                 loginRequest(email, password)
+                 loginRequest(email, password, intent)
              }
     }
-    fun loginRequest(email: String, password: String) {
+    fun loginRequest(email: String, password: String, intent: Intent) {
         val client = OkHttpClient()
 
         val url = "https://backendapp-production-da1c.up.railway.app/login"
@@ -50,12 +52,27 @@ class Tela1Activity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
                 // Handle failure
                 e.printStackTrace()
+                Log.d("OkHTTP", "sem resposta")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 // Handle response
                 val responseBody = response.body?.string()
+
                 if (responseBody != null) {
+                    if (response.code == 400) {
+                        Log.d("OkHTTP", "e-mail ou usuario invalidos")
+
+                        runOnUiThread{
+                            findViewById<EditText>(R.id.input_password).error = "E-mail ou senha inválidos"
+                            findViewById<EditText>(R.id.input_password).setText("")
+                            findViewById<EditText>(R.id.input_email).text.clear()
+                        }
+
+                    } else if (response.code == 200) {
+                        // call next activity
+                        startActivity(intent)
+                    }
                     Log.d("OkHTTP", responseBody)
                 }
                 println(responseBody)
