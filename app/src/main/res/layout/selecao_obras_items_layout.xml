@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutBtnSelecao"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:foregroundTint="#F1ECEC">
+
+    <Button
+        android:id="@+id/ButtonSelecaoObras"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="-140dp"
+        android:background="@drawable/cor_click_botao"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:typeface="normal"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonEditObra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/cor_click_botao"
+        android:foreground="@mipmap/botao_edit"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toEndOf="@+id/ButtonSelecaoObras"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <Button-->
+<!--        android:id="@+id/buttonQRObra"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:background="@drawable/cor_click_botao"-->
+<!--        android:foreground="@mipmap/qr_code_icon"-->
+<!--        android:foregroundGravity="clip_horizontal|clip_vertical"-->
+<!--        android:foregroundTint="#FFFFFF"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingLeft="10dp"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/buttonEditObra"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <ImageButton
+        android:id="@+id/buttonQRObra"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-7dp"
+        android:background="@drawable/cor_click_botao"
+        android:foregroundTint="#F3EDED"
+        android:padding="15dp"
+        android:scaleType="center"
+        android:scaleX=".8"
+        android:scaleY=".8"
+        android:src="@mipmap/qr_code_icon"
+        app:layout_constraintStart_toEndOf="@+id/buttonEditObra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#FBFBFB" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
