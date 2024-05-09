@@ -17,14 +17,14 @@ class AdminMenuActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.button_obras_cadastradas)
             .setOnClickListener {
-                // colocar nome da activity de cadastrar exposição
-                startActivity(Intent(this, CadastroExpo::class.java))
+                // colocar nome da activity da tela de obras
+                startActivity(Intent(this, SelecaoObras2::class.java))
             }
 
         findViewById<Button>(R.id.button_cadastrar_expo)
             .setOnClickListener {
-                // colocar nome da activity da tela de obras
-                startActivity(Intent(this, SelecaoObras2::class.java))
+                // colocar nome da activity de cadastrar exposição
+                startActivity(Intent(this, CadastroExpo::class.java))
             }
     }
 }
