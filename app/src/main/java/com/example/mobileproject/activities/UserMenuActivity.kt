@@ -1,6 +1,9 @@
 package com.example.mobileproject.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 //import androidx.activity.compose.setContent
 //import androidx.activity.enableEdgeToEdge
@@ -19,6 +22,14 @@ class UserMenuActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_menu)
 
+        findViewById<ImageButton>(R.id.loginButton)
+            .setOnClickListener {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
 
+        findViewById<Button>(R.id.button_scan)
+            .setOnClickListener {
+                // ler qrcode
+            }
     }
 }
