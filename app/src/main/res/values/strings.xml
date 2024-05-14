@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">MobileProject</string>
     <string name="header_tela">Administrador</string>
-    <string name="e_mail">"  E-mail"</string>
-    <string name="senha">"  Senha"</string>
+    <string name="e_mail">"Insira seu e-mail"</string>
+    <string name="senha">"Insira sua senha"</string>
     <string name="login">Login</string>
     <string name="obras_cadastradas">"Obras Cadastradas"</string>
     <string name="cadastrar_expo">"Cadastrar Exposição"</string>

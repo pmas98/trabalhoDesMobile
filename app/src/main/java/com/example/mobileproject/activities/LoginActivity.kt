@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.example.mobileproject.R
 import okhttp3.Call
 import okhttp3.Callback
@@ -63,10 +66,28 @@ class LoginActivity : AppCompatActivity() {
                     if (response.code == 400) {
                         Log.d("OkHTTP", "e-mail ou usuario invalidos")
 
-                        runOnUiThread{
-                            findViewById<EditText>(R.id.input_password).error = "E-mail ou senha inválidos"
-                            findViewById<EditText>(R.id.input_password).setText("")
-                            findViewById<EditText>(R.id.input_email).text.clear()
+                        if (email == "") {
+                            runOnUiThread {
+                                findViewById<EditText>(R.id.input_email).error = "Insira um e-mail"
+                                findViewById<EditText>(R.id.input_email).setText("")
+                            }
+                        }
+
+                        if (password == "") {
+                            runOnUiThread {
+                                findViewById<EditText>(R.id.input_password).error = "Insira uma senha"
+                                findViewById<EditText>(R.id.input_password).setText("")
+                            }
+                        }
+
+                        if (email != "" && password != ""){
+                            runOnUiThread {
+                                findViewById<EditText>(R.id.input_password).error = ""
+                                findViewById<EditText>(R.id.input_password).setText("")
+                                findViewById<EditText>(R.id.input_email).error = ""
+                                findViewById<EditText>(R.id.input_email).setText("")
+                                findViewById<TextView>(R.id.error).visibility = View.VISIBLE
+                            }
                         }
 
                     } else if (response.code == 200) {
