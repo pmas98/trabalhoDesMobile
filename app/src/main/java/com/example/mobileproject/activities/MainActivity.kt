@@ -2,7 +2,6 @@ package com.example.mobileproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mobileproject.activities.LoginActivity
 import android.content.Intent
 import com.example.mobileproject.activities.UserMenuActivity
 
