@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/LoginHeader"
+            android:id="@+id/nomeObra"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#0466C8"
@@ -27,38 +26,123 @@
             android:textSize="34sp"
             android:textStyle="bold" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/mainScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbarSize="10dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="98dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                tools:layout_editor_absoluteX="239dp"
-                tools:layout_editor_absoluteY="548dp" />
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="259dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/bg_caixas"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.56"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="369dp"
-                android:layout_height="435dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/label_email"
+                            android:layout_width="239dp"
+                            android:layout_height="37dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="por (Nome do Autor)"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="345dp"
+                    android:layout_height="76dp"
+                    android:background="@drawable/bg_caixas"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="206dp">
+
+                    <Button
+                        android:id="@+id/button_play_audio"
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:background="@drawable/cor_click_botao"
+                        android:fontFamily="sans-serif-medium"
+                        android:foreground="@mipmap/botao_play"
+                        android:foregroundGravity="fill_horizontal|center_vertical|clip_horizontal|clip_vertical|center_horizontal|fill"
+                        android:gravity="bottom|center"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:cornerRadius="10dp" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Reproduzir descrição por áudio"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="26sp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="226dp"
+                    android:layout_height="67dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                    app:layout_constraintVertical_bias="0.571" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
