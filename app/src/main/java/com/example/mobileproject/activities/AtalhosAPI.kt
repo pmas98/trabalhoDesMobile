@@ -1,29 +1,46 @@
 package com.example.mobileproject.activities
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.example.mobileproject.R
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody
 import okio.IOException
 import java.io.File
 import java.io.FileOutputStream
+
+
+val REQUEST_CODE_DIRECTORY = 200
 
 class AtalhosAPI() {
     fun verExpos() {
@@ -213,7 +230,21 @@ class AtalhosAPI() {
 
     }
 
-    fun downloadQR(obraId: String, context: Context) {
+    fun showSnackbarQR(view: View, message: String) {
+        val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG)
+        val customView = LayoutInflater.from(view.context).inflate(R.layout.toast_qr, null)
+        val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
+        snackbarLayout.setPadding(0, 0, 0, 0)
+
+        val text: TextView = customView.findViewById(R.id.qr_toast_message)
+        text.text = message
+
+        snackbarLayout.addView(customView, 0)
+        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+        snackbar.show()
+    }
+
+    fun downloadQR(obraId: String, context: Context, view: View) {
 
         val client = OkHttpClient()
 
@@ -250,6 +281,9 @@ class AtalhosAPI() {
                     ) // The relative path to the file within the external storage
                 }
 
+
+                // Use the selected directory URI to save the file
+
                 val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
 
                 val responseBody = response.body?.bytes() // Get the bytes of the response body
@@ -259,8 +293,96 @@ class AtalhosAPI() {
                         outputStream.write(responseBody)
                     }
                 }
+
+                (context as Activity).runOnUiThread {
+                    showSnackbarQR(view, "QR Code salvo em Downloads")
+                }
+
             }
         })
+    }
+
+    fun saveAudioFile(context: Context, audioBytes: ByteArray, displayName: String, mimeType: String) {
+        val resolver = context.contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val audioUri = resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        resolver.openOutputStream(audioUri!!)?.use { outputStream ->
+            outputStream.write(audioBytes)
+        }
+    }
+
+    fun getBinaryString(context: Context, fileUri: Uri): String {
+        val inputStream = context.contentResolver.openInputStream(fileUri)
+        val bytes = inputStream?.readBytes()
+        inputStream?.close()
+        return bytes?.joinToString(separator = "") { String.format("%8s", Integer.toBinaryString(it.toInt() and 0xFF)).replace(' ', '0') } ?: ""
+    }
+
+
+    fun convertFileToBase64(context: Context, fileUri: Uri): String {
+        val inputStream = context.contentResolver.openInputStream(fileUri)
+        val bytes = inputStream?.readBytes()
+        inputStream?.close()
+        return Base64.encodeToString(bytes, Base64.NO_WRAP)
+    }
+    fun patchObra(obraData: MutableMap<String,String>, context: Context) {
+
+        val url = "https://backendapp-production-da1c.up.railway.app/obra"
+        Log.d("OkHTTP", url)
+        val client = OkHttpClient()
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = """
+            {
+                 "id": "${obraData["id"]}",
+                 "name": "${obraData["name"]}",
+                 "autor": "${obraData["autor"]}",
+                 "description": "${obraData["description"]}",
+                 "imageURL": "${obraData["imageURL"]}"
+            }
+        """.trimIndent().toRequestBody(mediaType)
+
+        Log.d("OkHTTP", obraData.toString())
+        Log.d("OkHTTP", """
+            {
+                 "id": "${obraData["id"]}",
+                 "name": "${obraData["name"]}",
+                 "autor": "${obraData["autor"]}",
+                 "description": "${obraData["description"]}",
+                 "imageURL": "${obraData["imageURL"]}"
+            }
+        """.trimIndent())
+
+        val request = Request.Builder()
+            .patch(requestBody)
+            .url(url)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: java.io.IOException) {
+                // Handle failure
+                e.printStackTrace()
+                Log.d("OkHTTP", "sem resposta")
+            }
+
+            @RequiresApi(Build.VERSION_CODES.Q)
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    Log.d("OkHTTP", "QR: erro no cliente")
+                    Log.d("OkHTTP", response.toString())
+                    return
+                }
+
+                Log.d("MYmobileproject", response.toString())
+                (context as Activity).finish()
+            }
+        })
+
     }
 
 }

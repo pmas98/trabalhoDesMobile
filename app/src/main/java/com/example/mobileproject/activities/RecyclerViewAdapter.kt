@@ -58,7 +58,7 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
 
                 var index = nomes.indexOf(btn.text.toString())
                 val id = ids[index]
-                api.downloadQR(id, context)
+                api.downloadQR(id, context, btn_qr)
 
             }
 

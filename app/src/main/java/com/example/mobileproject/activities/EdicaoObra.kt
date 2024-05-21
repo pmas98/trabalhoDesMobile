@@ -3,6 +3,7 @@ package com.example.mobileproject.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -14,8 +15,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.toSpannable
+import androidx.lifecycle.withStarted
 import com.example.mobileproject.R
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -26,6 +29,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 
 suspend fun getObraByID(id: String) : String {
@@ -148,6 +154,7 @@ class EdicaoObra : AppCompatActivity() {
         autorObraEditText.text = obraData["autor"].toString()
         descricaoObraEditText.text = obraData["description"]
 
+
         nomeObraEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -239,11 +246,13 @@ class EdicaoObra : AppCompatActivity() {
         atualizarObraBtn.setOnClickListener{
             val activityContex = this@EdicaoObra
 
-            runBlocking {
-                val resposta = patchObra(obraData)
-                Log.d("MYmobileproject", resposta)
-                finish()
-            }
+//            runBlocking {
+//                val resposta = patchObra(obraData)
+//                Log.d("MYmobileproject", resposta)
+//                finish()
+//            }
+            Log.d("MYmobileproject", obraData.toString())
+            apiManager.patchObra(obraData,this@EdicaoObra)
         }
 
         var apagarObraBtn: Button = findViewById(R.id.button_apagar)
@@ -272,6 +281,25 @@ class EdicaoObra : AppCompatActivity() {
             noButton?.setOnClickListener {
                 dialog.dismiss()
             }
+
+        }
+
+        var adicionarAudioBtn: Button = findViewById(R.id.button_adicionar_audio)
+        var audioFilePath: String = ""
+
+        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                audioFilePath = uri.path.toString()
+                val audioString = apiManager.convertFileToBase64(this@EdicaoObra, uri)
+                obraData["imageURL"] = audioString
+            }
+
+            Log.d("TesteMP3", obraData["imageURL"]!!)
+        }
+
+        adicionarAudioBtn.setOnClickListener {
+
+            getContent.launch("audio/mpeg")
 
         }
 
