@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import com.example.mobileproject.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -291,12 +292,20 @@ class AtalhosAPI() {
                 if (responseBody != null) {
                     resolver.openOutputStream(uri!!)?.use { outputStream ->
                         outputStream.write(responseBody)
+                        outputStream.close()
                     }
+
                 }
 
                 (context as Activity).runOnUiThread {
                     showSnackbarQR(view, "QR Code salvo em Downloads")
                 }
+
+                val share = Intent(Intent.ACTION_SEND)
+                share.putExtra(Intent.EXTRA_STREAM, uri)
+                share.type = "image/png"
+                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                startActivity(context, Intent.createChooser(share, "Comparilhar QR Code"), null)
 
             }
         })

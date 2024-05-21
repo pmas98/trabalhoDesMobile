@@ -291,7 +291,7 @@ class EdicaoObra : AppCompatActivity() {
             if (uri != null) {
                 audioFilePath = uri.path.toString()
                 val audioString = apiManager.convertFileToBase64(this@EdicaoObra, uri)
-                obraData["imageURL"] = audioString
+                obraData["imageURL"] = audioFilePath
             }
 
             Log.d("TesteMP3", obraData["imageURL"]!!)
