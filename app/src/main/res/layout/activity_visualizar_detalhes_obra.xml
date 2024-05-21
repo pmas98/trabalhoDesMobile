@@ -21,7 +21,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/inicioButton"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -30,7 +30,7 @@
                 android:scaleX="2"
                 android:scaleY="2"
                 android:src="?attr/homeAsUpIndicator"
-                android:tint="#FFFFFF" />
+                app:tint="#FFFFFF" />
 
             <TextView
                 android:id="@+id/nomeAutor"
@@ -81,14 +81,50 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"
-                    android:layout_width="360dp"
-                    android:layout_height="48dp"
+                    android:layout_width="125dp"
+                    android:layout_height="41dp"
                     android:layout_marginTop="20dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10"></LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                    <Button
+                        android:id="@+id/aumetarButton"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cor_click_botao"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#FEFEFE"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="36dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Aa"
+                        android:textColor="@color/primaria"
+                        android:textSize="26dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/diminuirButton"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/cor_click_botao"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="#FEFEFE"
+                        android:textSize="26sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="360dp"
@@ -103,20 +139,37 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-                    <ImageButton
-                        android:id="@+id/imageButton2"
+                    <Button
+                        android:id="@+id/button_play_audio"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_weight="1"
-                        android:background="@color/primaria"
-                        app:srcCompat="@mipmap/botao_play" />
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/cor_click_botao"
+                        android:fontFamily="sans-serif-medium"
+                        android:foreground="@mipmap/botao_play"
+                        android:foregroundGravity="fill_horizontal|center_vertical|clip_horizontal|clip_vertical|center_horizontal|fill"
+                        android:gravity="bottom|center"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:cornerRadius="10dp" />
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="280dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="Reproduzir descrição por áudio"
+                        android:gravity="center_vertical"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:textColor="#FEFEFE"
+                        />
+
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
