@@ -53,7 +53,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbarSize="10dp"
+            android:scrollbarStyle="insideInset">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -95,7 +97,7 @@
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/cor_click_botao"
+                        android:background="@drawable/cor_click_botao_redondo"
                         android:gravity="center"
                         android:text="+"
                         android:textColor="#FEFEFE"
@@ -110,7 +112,7 @@
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
                         android:text="Aa"
-                        android:textColor="@color/primaria"
+                        android:textColor="@color/white"
                         android:textSize="26dp"
                         android:textStyle="bold" />
 
@@ -119,11 +121,11 @@
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/cor_click_botao"
+                        android:background="@drawable/cor_click_botao_redondo"
                         android:gravity="center"
                         android:text="-"
                         android:textColor="#FEFEFE"
-                        android:textSize="26sp" />
+                        android:textSize="30sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -163,12 +165,11 @@
                         android:layout_width="280dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Reproduzir descrição por áudio"
                         android:gravity="center_vertical"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
+                        android:text="Reproduzir descrição por áudio"
                         android:textColor="#FEFEFE"
-                        />
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
