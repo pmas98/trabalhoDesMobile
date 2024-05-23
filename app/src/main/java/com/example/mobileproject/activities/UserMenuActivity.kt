@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -38,9 +39,9 @@ class UserMenuActivity : ComponentActivity() {
     private val scanLauncher = registerForActivityResult(ScanContract()) {
         result: ScanIntentResult -> run {
             if (result.contents == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
+                Log.d("teste", result.contents)
             } else {
-                // tratar id
+                Log.d("teste",result.contents)
             }
         }
     }
@@ -52,8 +53,7 @@ class UserMenuActivity : ComponentActivity() {
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
         options.setCameraId(0)
         options.setBeepEnabled(false)
-        options.setBarcodeImageEnabled(true)
-        options.setOrientationLocked(false)
+        options.setOrientationLocked(true)
 
         scanLauncher.launch(options)
     }
@@ -79,7 +79,7 @@ class UserMenuActivity : ComponentActivity() {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             showCamera()
         } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {
-            Toast.makeText(context, "acesso à CAMERA necessário", Toast.LENGTH_SHORT).show()
+            Log.d("Teste", "Entrou aqui")
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
