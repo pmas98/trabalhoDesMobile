@@ -12,6 +12,12 @@ class VisualizarDetalhesObraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_detalhes_obra)
 
+        var extras = intent.extras;
+        if (extras != null) {
+            // pega o id da obra lido no qrcode
+            val id = extras.getString("id")
+        }
+
         findViewById<ImageButton>(R.id.inicioButton)
             .setOnClickListener {
                 startActivity(Intent(this, UserMenuActivity::class.java))

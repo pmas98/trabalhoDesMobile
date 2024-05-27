@@ -39,9 +39,12 @@ class UserMenuActivity : ComponentActivity() {
     private val scanLauncher = registerForActivityResult(ScanContract()) {
         result: ScanIntentResult -> run {
             if (result.contents == null) {
-                Log.d("teste", result.contents)
+                Log.d("teste", "nada lido")
             } else {
-                Log.d("teste",result.contents)
+                Log.d("teste", result.contents)
+                val intent = Intent(this, VisualizarDetalhesObraActivity::class.java)
+                intent.putExtra("id", result.contents)
+                startActivity(intent)
             }
         }
     }
@@ -79,7 +82,7 @@ class UserMenuActivity : ComponentActivity() {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             showCamera()
         } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {
-            Log.d("Teste", "Entrou aqui")
+            Log.d("teste", "permissao da camera negada")
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
