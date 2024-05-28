@@ -44,9 +44,12 @@ class UserMenuActivity : ComponentActivity() {
                 Log.d("teste", result.contents)
                 val intent = Intent(this, VisualizarDetalhesObraActivity::class.java)
                 intent.putExtra("id", result.contents)
-                startActivity(intent)
+                 startActivity(intent)
+
             }
         }
+        Log.d("teste", "AAAAAAAAA")
+        // startActivity(intent)
     }
 
     private lateinit var binding: ActivityUserMenuBinding

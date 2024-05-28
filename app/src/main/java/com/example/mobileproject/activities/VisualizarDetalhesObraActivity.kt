@@ -23,7 +23,7 @@ class VisualizarDetalhesObraActivity : AppCompatActivity() {
                 startActivity(Intent(this, UserMenuActivity::class.java))
             }
 
-        findViewById<ImageButton>(R.id.button_play_audio)
+        findViewById<Button>(R.id.button_play_audio)
             .setOnClickListener {
                 // tocar audio
             }
