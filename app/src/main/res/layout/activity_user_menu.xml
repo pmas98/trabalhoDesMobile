@@ -60,6 +60,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginBottom="150dp"
                 android:background="@drawable/circle_for_qr"
                 android:padding="35dp"
@@ -68,13 +69,14 @@
                 android:src="@drawable/qr_code_symbol"
                 app:layout_constraintBottom_toTopOf="@+id/button_scan"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button_scan"
                 android:layout_width="241dp"
                 android:layout_height="57dp"
-                android:layout_marginTop="525dp"
+                android:layout_marginTop="520dp"
                 android:background="@drawable/cor_click_botao"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
@@ -85,9 +87,21 @@
                 android:typeface="normal"
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/erro_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Obra não encontrada. Tente novamente."
+                android:textColor="@color/vermelho_primario"
+                android:textSize="17sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_scan" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

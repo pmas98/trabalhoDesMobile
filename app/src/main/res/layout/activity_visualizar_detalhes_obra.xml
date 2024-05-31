@@ -62,24 +62,29 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/nomeObra"
                     android:layout_width="360dp"
-                    android:layout_height="167dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="60sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/descricaoObra"
                     android:layout_width="360dp"
-                    android:layout_height="299dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                    app:layout_constraintTop_toBottomOf="@+id/nomeObra" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"
@@ -90,7 +95,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10">
+                    app:layout_constraintTop_toBottomOf="@+id/descricaoObra">
 
                     <Button
                         android:id="@+id/aumetarButton"
@@ -130,7 +135,7 @@
 
                 <LinearLayout
                     android:layout_width="360dp"
-                    android:layout_height="82dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/bg_caixas"
@@ -168,7 +173,7 @@
                         android:gravity="center_vertical"
                         android:text="Reproduzir descrição por áudio"
                         android:textColor="#FEFEFE"
-                        android:textSize="22sp"
+                        android:textSize="28sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

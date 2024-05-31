@@ -5,8 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
@@ -44,12 +46,10 @@ class UserMenuActivity : ComponentActivity() {
                 Log.d("teste", result.contents)
                 val intent = Intent(this, VisualizarDetalhesObraActivity::class.java)
                 intent.putExtra("id", result.contents)
-                 startActivity(intent)
+                startActivity(intent)
 
             }
         }
-        Log.d("teste", "AAAAAAAAA")
-        // startActivity(intent)
     }
 
     private lateinit var binding: ActivityUserMenuBinding
@@ -73,6 +73,16 @@ class UserMenuActivity : ComponentActivity() {
             .setOnClickListener {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
+
+        val extras = intent.extras;
+        if (extras != null) {
+            val erro_id = extras.getBoolean("erro_id")
+            if (erro_id == true) {
+                findViewById<TextView>(R.id.erro_id).visibility = View.VISIBLE
+            }
+        }
+
+
     }
 
     private fun initViews() {
