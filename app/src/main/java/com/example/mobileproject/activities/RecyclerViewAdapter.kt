@@ -62,6 +62,17 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
 
             }
 
+            btn.setOnClickListener {
+
+
+                var index = nomes.indexOf(btn.text.toString())
+                val id = ids[index]
+                val intent = Intent(context, VisualizarDetalhesObraActivity::class.java)
+                intent.putExtra("id", id)
+                Log.d("teste", id)
+                startActivity(context, intent, null)
+
+            }
         }
     }
 

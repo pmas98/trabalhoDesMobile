@@ -28,6 +28,9 @@ import com.example.mobileproject.databinding.ActivityUserMenuBinding
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 
 class UserMenuActivity : ComponentActivity() {
@@ -44,8 +47,18 @@ class UserMenuActivity : ComponentActivity() {
                 Log.d("teste", "nada lido")
             } else {
                 Log.d("teste", result.contents)
-                val intent = Intent(this, VisualizarDetalhesObraActivity::class.java)
-                intent.putExtra("id", result.contents)
+                val intent = Intent(this@UserMenuActivity, VisualizarDetalhesObraActivity::class.java)
+                var leituraQr: String = ""
+                val jsonElement = Json.parseToJsonElement(result.contents)
+                if (jsonElement is JsonObject) {
+                    var value = jsonElement["id"]?.jsonPrimitive?.content
+                    if (value != null) {
+                        leituraQr = value
+                    }
+                }
+
+                intent.putExtra("id", leituraQr)
+                Log.d("teste", leituraQr)
                 startActivity(intent)
 
             }

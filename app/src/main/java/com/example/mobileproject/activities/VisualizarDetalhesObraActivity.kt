@@ -37,17 +37,25 @@ class VisualizarDetalhesObraActivity : AppCompatActivity(), TextToSpeech.OnInitL
         var tituloFontSize = 60f
         var descricaoFontSize = 26f
 
+        val id = intent.getStringExtra("id")
+
         val intent = Intent(this, UserMenuActivity::class.java)
         val extras = intent.extras;
-        if (extras != null) {
+        Log.d("QrCode", extras.toString())
+
+        if (id != null) {
             // pega o id da obra lido no qrcode
-            val id = extras.getString("id")
+            //val id = extras.getString("id")
             getObraDetails(id, intent)
+            Log.d("QrCode", id!!)
+        } else {
+            Log.d("QrCode", "nao existe id")
         }
 
         findViewById<ImageButton>(R.id.inicioButton)
             .setOnClickListener {
-                startActivity(intent)
+                //startActivity(intent)
+                finish()
             }
 
         findViewById<Button>(R.id.aumetarButton)
@@ -92,7 +100,7 @@ class VisualizarDetalhesObraActivity : AppCompatActivity(), TextToSpeech.OnInitL
     private fun getObraDetails(id: String?, intent: Intent) {
         val client = OkHttpClient()
 
-        val url = "https://backendapp-production-da1c.up.railway.app/obraId?id={$id}"
+        val url = "https://backendapp-production-da1c.up.railway.app/obraId?id=$id"
         val request = Request.Builder()
             .url(url)
             .build()
@@ -118,22 +126,25 @@ class VisualizarDetalhesObraActivity : AppCompatActivity(), TextToSpeech.OnInitL
                         val jsonElement = Json.parseToJsonElement(responseBody)
 
                         if (jsonElement is JsonObject) {
-                            var value = jsonElement["autor"]?.jsonPrimitive?.content
-                            if (value != null) {
+                            var autor = jsonElement["autor"]?.jsonPrimitive?.content
+                            Log.d("OkHTTP", autor.toString())
+                            if (autor != null) {
                                 runOnUiThread {
-                                    findViewById<TextView>(R.id.nomeAutor).text = value
+                                    findViewById<TextView>(R.id.nomeAutor).text = autor
                                 }
                             }
-                            value = jsonElement["name"]?.jsonPrimitive?.content
-                            if (value != null) {
+                            var name = jsonElement["name"]?.jsonPrimitive?.content
+                            Log.d("OkHTTP", name.toString())
+                            if (name != null) {
                                 runOnUiThread {
-                                    findViewById<TextView>(R.id.nomeObra).text = value
+                                    findViewById<TextView>(R.id.nomeObra).text = name
                                 }
                             }
-                            value = jsonElement["description"]?.jsonPrimitive?.content
-                            if (value != null) {
+                            var description = jsonElement["description"]?.jsonPrimitive?.content
+                            Log.d("OkHTTP", description.toString())
+                            if (description != null) {
                                 runOnUiThread {
-                                    findViewById<TextView>(R.id.descricaoObra).text = value
+                                    findViewById<TextView>(R.id.descricaoObra).text = description
                                 }
                             }
                         }
