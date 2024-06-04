@@ -3,8 +3,10 @@ package com.example.mobileproject.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,8 +16,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.toSpannable
+import androidx.lifecycle.withStarted
 import com.example.mobileproject.R
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -26,6 +33,10 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.util.Locale
 
 
 suspend fun getObraByID(id: String) : String {
@@ -119,8 +130,11 @@ suspend fun patchObra(obraData: MutableMap<String,String>): String{
 }
 
 
+class EdicaoObra : AppCompatActivity(), TextToSpeech.OnInitListener {
+    var playBtn: Button? = null
+    var textToSpeech: TextToSpeech? = null
+    var descricaoObraEditText: TextView? = null
 
-class EdicaoObra : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edicao_obra)
@@ -131,7 +145,7 @@ class EdicaoObra : AppCompatActivity() {
 
         var nomeObraEditText: TextView = findViewById(R.id.input_obra_name)
         var autorObraEditText: TextView = findViewById(R.id.input_obra_autor)
-        var descricaoObraEditText: TextView = findViewById(R.id.input_obra_description)
+        descricaoObraEditText = findViewById(R.id.input_obra_description)
 
 
 
@@ -146,7 +160,8 @@ class EdicaoObra : AppCompatActivity() {
         Log.d("MYmobileproject", "${obraData}")
         nomeObraEditText.text = obraData["name"].toString()
         autorObraEditText.text = obraData["autor"].toString()
-        descricaoObraEditText.text = obraData["description"]
+        descricaoObraEditText!!.text = obraData["description"]
+
 
         nomeObraEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -188,14 +203,14 @@ class EdicaoObra : AppCompatActivity() {
             autorObraEditText.isCursorVisible = hasFocus
         }
 
-        descricaoObraEditText.addTextChangedListener(object : TextWatcher {
+        descricaoObraEditText!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 // Enable the button if there are more than 3 characters in the EditText
-                obraData["description"] = descricaoObraEditText.text.toString()
+                obraData["description"] = descricaoObraEditText!!.text.toString()
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -203,7 +218,7 @@ class EdicaoObra : AppCompatActivity() {
             }
         })
 
-        descricaoObraEditText.setOnTouchListener { v, event ->
+        descricaoObraEditText!!.setOnTouchListener { v, event ->
             v.parent.requestDisallowInterceptTouchEvent(true)
             if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
                 v.parent.requestDisallowInterceptTouchEvent(false)
@@ -211,9 +226,9 @@ class EdicaoObra : AppCompatActivity() {
             false
         }
 
-        descricaoObraEditText.setOnFocusChangeListener { v, hasFocus ->
+        descricaoObraEditText!!.setOnFocusChangeListener { v, hasFocus ->
             // Show cursor// Remove cursor
-            descricaoObraEditText.isCursorVisible = hasFocus
+            descricaoObraEditText!!.isCursorVisible = hasFocus
         }
 
         val mainScrollView: ScrollView = findViewById(R.id.mainScrollView)
@@ -222,14 +237,14 @@ class EdicaoObra : AppCompatActivity() {
 
             var isUserEditingText: Boolean = nomeObraEditText.isFocused or
                     autorObraEditText.isFocused or
-                    descricaoObraEditText.isFocused
+                    descricaoObraEditText!!.isFocused
 
             if ( isUserEditingText ) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
                 nomeObraEditText.clearFocus()
                 autorObraEditText.clearFocus()
-                descricaoObraEditText.clearFocus()
+                descricaoObraEditText!!.clearFocus()
             }
             false
         }
@@ -239,11 +254,13 @@ class EdicaoObra : AppCompatActivity() {
         atualizarObraBtn.setOnClickListener{
             val activityContex = this@EdicaoObra
 
-            runBlocking {
-                val resposta = patchObra(obraData)
-                Log.d("MYmobileproject", resposta)
-                finish()
-            }
+//            runBlocking {
+//                val resposta = patchObra(obraData)
+//                Log.d("MYmobileproject", resposta)
+//                finish()
+//            }
+            Log.d("MYmobileproject", obraData.toString())
+            apiManager.patchObra(obraData,this@EdicaoObra)
         }
 
         var apagarObraBtn: Button = findViewById(R.id.button_apagar)
@@ -275,6 +292,47 @@ class EdicaoObra : AppCompatActivity() {
 
         }
 
+        playBtn= findViewById(R.id.button_play_audio)
+        playBtn!!.isEnabled = false
+        textToSpeech = TextToSpeech(this, this)
+
+        playBtn!!.setOnClickListener {
+            if (textToSpeech!!.isSpeaking){
+                textToSpeech!!.stop()
+                var drawable = ResourcesCompat.getDrawable(resources, R.mipmap.botao_play, null)
+                drawable?.setTintList(null)
+                playBtn!!.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+            } else {
+                speakOut()
+                var drawable = ResourcesCompat.getDrawable(resources, R.mipmap.pause_btn, null)
+                val tintColor = ContextCompat.getColor(this, R.color.terciaria)
+                DrawableCompat.setTint(drawable!!, tintColor)
+                playBtn!!.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+            }
+        }
+
     }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = textToSpeech!!.setLanguage(Locale.getDefault())
+            textToSpeech!!.setSpeechRate(0.8F)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS","The Language not supported!")
+            } else {
+                playBtn!!.isEnabled = true
+            }
+        }
+    }
+
+    fun speakOut() {
+        val text = descricaoObraEditText!!.text.toString()
+        textToSpeech!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+    }
+
 }
+
+
+
 

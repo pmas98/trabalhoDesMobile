@@ -23,6 +23,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import com.example.mobileproject.activities.AtalhosAPI
 
 
 class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<String>, val idsObras: List<String>, val context: Context) : RecyclerView.Adapter<SelecaoObrasAdapter.ViewHolder>() {
@@ -39,6 +40,8 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
 
         init {
 
+            var api = AtalhosAPI()
+
             btn_edit.setOnClickListener {
                 Log.d("OkHTTP", btn.text.toString())
                 var index = nomes.indexOf(btn.text.toString())
@@ -50,6 +53,15 @@ class SelecaoObrasAdapter(private val items: List<String>, val nomeObras: List<S
                 intent.putExtra("id", id)
                 startActivity(screenContext, intent, null)
             }
+
+            btn_qr.setOnClickListener {
+
+                var index = nomes.indexOf(btn.text.toString())
+                val id = ids[index]
+                api.downloadQR(id, context, btn_qr)
+
+            }
+
         }
     }
 

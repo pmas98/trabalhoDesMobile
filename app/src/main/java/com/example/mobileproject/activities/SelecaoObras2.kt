@@ -2,6 +2,7 @@ package com.example.mobileproject.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 import android.os.Bundle
@@ -169,6 +170,16 @@ fun obterIdsJason(response: String): List<String> {
 class SelecaoObras2 : AppCompatActivity() {
     var toRefresh2 = false
     lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            val uriTree: Uri? = data?.data
+            // Save the obtained directory URI for later use
+            val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            this@SelecaoObras2.contentResolver.takePersistableUriPermission(uriTree!!, takeFlags)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selecao_obras2)
@@ -316,3 +327,4 @@ class SelecaoObras2 : AppCompatActivity() {
         }
     }
 }
+
