@@ -18,6 +18,9 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.toSpannable
 import androidx.lifecycle.withStarted
 import com.example.mobileproject.R
@@ -289,25 +292,6 @@ class EdicaoObra : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         }
 
-        var adicionarAudioBtn: Button = findViewById(R.id.button_adicionar_audio)
-        var audioFilePath: String = ""
-
-        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if (uri != null) {
-                audioFilePath = uri.path.toString()
-                val audioString = apiManager.convertFileToBase64(this@EdicaoObra, uri)
-                obraData["imageURL"] = audioFilePath
-            }
-
-            Log.d("TesteMP3", obraData["imageURL"]!!)
-        }
-
-        adicionarAudioBtn.setOnClickListener {
-
-            getContent.launch("audio/mpeg")
-
-        }
-
         playBtn= findViewById(R.id.button_play_audio)
         playBtn!!.isEnabled = false
         textToSpeech = TextToSpeech(this, this)
@@ -315,8 +299,15 @@ class EdicaoObra : AppCompatActivity(), TextToSpeech.OnInitListener {
         playBtn!!.setOnClickListener {
             if (textToSpeech!!.isSpeaking){
                 textToSpeech!!.stop()
+                var drawable = ResourcesCompat.getDrawable(resources, R.mipmap.botao_play, null)
+                drawable?.setTintList(null)
+                playBtn!!.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
             } else {
                 speakOut()
+                var drawable = ResourcesCompat.getDrawable(resources, R.mipmap.pause_btn, null)
+                val tintColor = ContextCompat.getColor(this, R.color.terciaria)
+                DrawableCompat.setTint(drawable!!, tintColor)
+                playBtn!!.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
             }
         }
 
