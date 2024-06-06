@@ -1,8 +1,11 @@
-## Relatório final
+# Aplicativo Espaço Cultural UNIFOR
 
+## Relatório final
 [Template Trabalho Disp. Moveis.docx.pdf](https://github.com/user-attachments/files/15614673/Template.Trabalho.Disp.Moveis.docx.pdf)
 
-# Aplicativo Espaço Cultural UNIFOR
+## Integrantes
+Pedro Gabriel Carvalho Fernandes, Filipe Tavares Soares e Letícia Bezerra Gonçalves Holanda
+
 ## Visão Geral
 
 O Aplicativo Espaço Cultural UNIFOR é projetado para aprimorar a experiência dos visitantes no espaço cultural da UNIFOR (Universidade de Fortaleza). Este aplicativo Android, desenvolvido em Kotlin, oferece uma variedade de recursos para auxiliar visitantes e administradores, incluindo a leitura de QR codes para acesso rápido a informações e uma área administrativa para gerenciar exposições e obras de arte.
